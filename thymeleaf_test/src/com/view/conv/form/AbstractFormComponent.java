@@ -8,8 +8,8 @@ public abstract class AbstractFormComponent extends ViewComponent {
 
     protected HeadingLabel groupLabel;
 
-    public AbstractFormComponent(ViewComponent parent, String id, int x, int y, int width, Set<String> states) {
-        super(parent, id, x, y, width, states);
+    public AbstractFormComponent(ViewComponent parent, String id, int x, int y, Set<String> states, int width) {
+        super(parent, id, x, y, states, width);
     }
 
     public AbstractFormComponent(ViewComponent parent) {

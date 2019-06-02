@@ -1,0 +1,5 @@
+[# th:utext="${indent}"/]<div class="row">[# th:each="col : ${cols}"]
+[# th:utext="${indent}"/]    <div class="[# th:utext="${col.colClass}"/]">
+[# th:utext="${col.text}"/]
+[# th:utext="${indent}"/]    </div>
+[/][# th:utext="${indent}"/]</div>

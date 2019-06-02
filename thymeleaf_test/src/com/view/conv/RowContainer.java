@@ -2,10 +2,14 @@ package com.view.conv;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.view.conv.util.TextBuilder;
 
 public class RowContainer extends AbstractComponentContainer {
     private static final Logger logger = LoggerFactory.getLogger(RowContainer.class);
@@ -82,6 +86,21 @@ public class RowContainer extends AbstractComponentContainer {
 
     @Override
     public String getHtmlText() {
+
+        List<RowData> cols = new ArrayList<RowData>();
+        for(ViewComponent c : this.cells) {
+            RowData data = new RowData();
+            data.colClass = this.getColClass(c);
+            data.text = c.getHtmlText();
+            cols.add(data);
+        }
+
+        TextBuilder builder = TextBuilder.getInstance();
+        Map<String, Object> parms = new HashMap<>();
+        parms.put("cols", cols);
+        return builder.create("row.txt", this.getIndent(), parms);
+
+        /*
         StringBuilder builder = new StringBuilder();
         builder.append(this.getIndent()).append("<div class=\"row\">").append("\n");
         for(ViewComponent c : this.cells) {
@@ -92,6 +111,7 @@ public class RowContainer extends AbstractComponentContainer {
         }
         builder.append(this.getIndent()).append("</div>").append("\n");
         return builder.toString();
+        */
     }
 
     protected String getColClass(ViewComponent c) {

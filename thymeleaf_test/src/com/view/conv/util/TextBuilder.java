@@ -14,13 +14,16 @@ public class TextBuilder {
     public static TextBuilder getInstance() {
         if(INSTANCE == null) {
             INSTANCE = new TextBuilder();
-            INSTANCE.initialize();
+            INSTANCE.init();
         }
         return INSTANCE;
     }
+    public static void initialize() {
+        getInstance();
+    }
     private TextBuilder() {
     }
-    protected void initialize() {
+    protected void init() {
         final TemplateEngine engine = new TemplateEngine();
         final ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
         templateResolver.setOrder(Integer.valueOf(1));
@@ -33,7 +36,7 @@ public class TextBuilder {
 
         this.engine = engine;
     }
-    public String create(String templateName, String indent, Map<String, String> params) {
+    public String create(String templateName, String indent, Map<String, Object> params) {
         final Context context = new Context(Locale.getDefault());
         context.setVariable("indent", indent);
         params.forEach((k, v) -> {

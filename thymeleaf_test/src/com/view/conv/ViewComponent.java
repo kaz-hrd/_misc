@@ -5,6 +5,7 @@ import java.util.Set;
 public class ViewComponent {
     protected int x = 0;
     protected int y= 0;
+    protected int margin = 0;
     protected int width = Config.getBaseWidth();
     protected int indentNum = 0;
     protected String id;
@@ -14,16 +15,21 @@ public class ViewComponent {
         this.parent = parent;
         if(this.parent != null) {
             this.indentNum = this.parent.indentNum + 1;
+            this.width = this.parent.width + this.parent.margin;
         }
     }
-    public ViewComponent(ViewComponent parent, String id, int x, int y, int width, Set<String> states) {
+    public ViewComponent(ViewComponent parent, String id, int x, int y, Set<String> states) {
         this(parent);
         this.id = id;
         this.x = x;
         this.y = y;
-        this.width = width;
         this.states = states;
     }
+    public ViewComponent(ViewComponent parent, String id, int x, int y, Set<String> states, int width) {
+        this(parent, id, x, y, states);
+        this.width = width;
+    }
+
     public void updateParent(ViewComponent parent) {
         this.parent = parent;
         if(this.parent != null) {

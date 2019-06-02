@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.view.conv.form.TextInput;
+import com.view.conv.util.TextBuilder;
 
 public class TestMain {
 
@@ -19,6 +20,8 @@ public class TestMain {
         //Config.setMaxWidth(900);
 
         Config.print();
+
+        TextBuilder.initialize();
 
         Logger logger = LoggerFactory.getLogger(TestMain.class);
 
@@ -37,14 +40,14 @@ public class TestMain {
         row1.setY(40);
         layout1.addViewComponent(row1);
 
-        row1.addViewComponent(new TextInput(row1, "ui01", 0, 0, 100, new TreeSet<>(Arrays.asList("st1", "st2", "st3", "st4"))));
-        row1.addViewComponent(new TextInput(row1, "ui02", 120, 0, 100, new TreeSet<>(Arrays.asList("st1", "st2", "st3", "st4"))));
-        row1.addViewComponent(new TextInput(row1, "ui03", 250, 0, 100, new TreeSet<>(Arrays.asList("st1", "st2", "st3", "st4"))));
-        row1.addViewComponent(new TextInput(row1, "ui04", 349, 0, 100, new TreeSet<>(Arrays.asList("st1", "st2", "st3", "st4"))));
+        row1.addViewComponent(new TextInput(row1, "ui01", 0, 0, new TreeSet<>(Arrays.asList("st1", "st2", "st3", "st4")), 40));
+        row1.addViewComponent(new TextInput(row1, "ui02", 120, 0, new TreeSet<>(Arrays.asList("st1", "st2", "st3", "st4")), 150));
+        row1.addViewComponent(new TextInput(row1, "ui03", 250, 0, new TreeSet<>(Arrays.asList("st1", "st2", "st3", "st4")), 200));
+        row1.addViewComponent(new TextInput(row1, "ui04", 349, 0, new TreeSet<>(Arrays.asList("st1", "st2", "st3", "st4")), 250));
 
-        layout1.addViewComponent(new TextInput(layout1, "u12", 50, 0, 0, new TreeSet<>(Arrays.asList("st1", "st2", "st3", "st4"))));
-        layout1.addViewComponent(new TextInput(layout1, "u11", 10, 1, 0, new TreeSet<>(Arrays.asList("st1", "st2", "st3", "st4"))));
-        layout1.addViewComponent(new TextInput(layout1, "u13", 10, 6, 0, new TreeSet<>(Arrays.asList("st1", "st2", "st3", "st4"))));
+        layout1.addViewComponent(new TextInput(layout1, "u12", 50, 0, new TreeSet<>(Arrays.asList("st1", "st2", "st3", "st4")), 500));
+        layout1.addViewComponent(new TextInput(layout1, "u11", 10, 1, new TreeSet<>(Arrays.asList("st1", "st2", "st3", "st4")), 100));
+        layout1.addViewComponent(new TextInput(layout1, "u13", 10, 6, new TreeSet<>(Arrays.asList("st1", "st2", "st3", "st4")), 20));
 
         AbstractComponentContainer card1 = new CompositeCointainer(layout1);
         card1.setId("card1");
@@ -59,9 +62,9 @@ public class TestMain {
         row2.setY(0);
         card1.addViewComponent(row2);
 
-        row2.addViewComponent(new ViewComponent(row2, "ui21", 0, 0, 100, new TreeSet<>(Arrays.asList("st1", "st2", "st3", "st4"))));
-        row2.addViewComponent(new ViewComponent(row2, "ui22", 120, 0, 100, new TreeSet<>(Arrays.asList("st1", "st2", "st3", "st4"))));
-        row2.addViewComponent(new ViewComponent(row2, "ui23", 250, 0, 100, new TreeSet<>(Arrays.asList("st1", "st2", "st3", "st4"))));
+        row2.addViewComponent(new TextInput(row2, "ui21", 0, 0, new TreeSet<>(Arrays.asList("st1", "st2", "st3", "st4")), 0));
+        row2.addViewComponent(new TextInput(row2, "ui22", 120, 0, new TreeSet<>(Arrays.asList("st1", "st2", "st3", "st4")), 350));
+        row2.addViewComponent(new TextInput(row2, "ui23", 250, 0, new TreeSet<>(Arrays.asList("st1", "st2", "st3", "st4")), 0));
 
         AbstractComponentContainer card2 = new CompositeCointainer(layout1);
         card2.setId("card2");
