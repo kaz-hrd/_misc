@@ -1,0 +1,5 @@
+
+
+[# th:each="propInfo : ${param.propertiesInfo}"]
+    public [# th:utext="${propInfo.name}"/]:[# th:utext="${propInfo.type}"/] = null;
+[/]

@@ -1,0 +1,3 @@
+[# th:utext="${indent}"/]<input type="text" id="[# th:utext="${id}"/]"
+[# th:utext="${indent}"/]  class="form-control"
+[# th:utext="${indent}"/]  >
