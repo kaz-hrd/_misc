@@ -20,9 +20,6 @@ public class RowContainer extends AbstractComponentContainer {
     protected List<ViewComponent> cells = new ArrayList<>();
     protected int cellWidth = 0;
 
-    protected int minLimitWidth = 0;
-    protected int validEmptyWidth = 0;
-
     public RowContainer(ViewComponent parent) {
         super(parent);
         calcCellWidth();
@@ -32,8 +29,6 @@ public class RowContainer extends AbstractComponentContainer {
     }
     protected void calcCellWidth() {
         this.cellWidth = this.width / Config.getCellNum();
-        this.minLimitWidth = (int)(this.cellWidth * 0.9);
-        this.validEmptyWidth = (int)(this.cellWidth * 0.5);
 
     }
     @Override
@@ -68,20 +63,25 @@ public class RowContainer extends AbstractComponentContainer {
 
     protected void adjustWidth() {
         ViewComponent prev = null;
-        int totalWidth = 0;
         for(ViewComponent c : this.cells) {
             if(prev != null) {
                 if(prev.width == 0) {
                     prev.width = c.x - prev.x - 2;
                     logger.info("幅サイズの自動設定を実施 id=" + prev.id + ", width=" + prev.width);
                 }
-                totalWidth += prev.width;
             }
             prev = c;
         }
         if(prev != null && prev.width == 0) {
-            prev.width = this.parent.width - totalWidth - 2;
-            logger.info("幅サイズの自動設定を実施 id=" + prev.id + ", width=" + prev.width);
+            ViewComponent c = prev;
+            if(this.cells.size() == 1) {
+                c.width = this.width - 2;
+                logger.info("幅サイズの自動設定を実施 id=" + c.id + ", width=" + c.width);
+            }else {
+                prev = this.cells.get(this.cells.size() - 2);
+                c.width = this.width - (prev.x + prev.width) - 2;
+                logger.info("幅サイズの自動設定を実施 id=" + c.id + ", width=" + c.width);
+            }
         }
     }
 
@@ -94,19 +94,11 @@ public class RowContainer extends AbstractComponentContainer {
         Collections.sort(this.cells, (o1, o2) -> o1.x - o2.x);
     }
 
-    protected int calcWidth(ViewComponent c) {
-        int w = (int)(c.width  / this.cellWidth);
-        return w;
-    }
 
     protected int calcCellCount(ViewComponent c) {
-        int w = this.calcWidth(c);
+        int w = (int) Math.round((double)c.width / (double)this.cellWidth);
         if(w <= 0) {
             return 1;
-        }
-        int rem = c.width % this.cellWidth;
-        if(rem >= this.minLimitWidth) {
-            w++;
         }
         return w;
     }
@@ -118,11 +110,7 @@ public class RowContainer extends AbstractComponentContainer {
 
     protected int calcEmptyCells(ViewComponent prev, ViewComponent current) {
         int s = this.calcEmptySpaceWidth(prev, current);
-        int w = s / this.cellWidth;
-        int rem = s % this.cellWidth;
-        if(rem >= this.validEmptyWidth) {
-            w++;
-        }
+        int w = (int) Math.round((double)s / (double)this.cellWidth);
         return w;
     }
 

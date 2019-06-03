@@ -51,7 +51,6 @@ public class TestMain {
 
         AbstractComponentContainer card1 = new CompositeCointainer(layout1);
         card1.setId("card1");
-        card1.setWidth(1100);
         card1.setX(0);
         card1.setY(120);
         card1.setStates(new TreeSet<>(Arrays.asList("st3", "st4")));
@@ -68,7 +67,6 @@ public class TestMain {
 
         AbstractComponentContainer card2 = new CompositeCointainer(layout1);
         card2.setId("card2");
-        card2.setWidth(1100);
         card2.setX(0);
         card2.setY(122);
         card2.setStates(new TreeSet<>(Arrays.asList("st3")));
@@ -76,7 +74,6 @@ public class TestMain {
 
         AbstractComponentContainer card3 = new CompositeCointainer(layout1);
         card3.setId("card3");
-        card3.setWidth(1100);
         card3.setX(0);
         card3.setY(122);
         card3.setStates(new TreeSet<>(Arrays.asList("st1")));
