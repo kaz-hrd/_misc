@@ -17,17 +17,19 @@ public class Config {
     private static int ALLOWABLE_LIMIT_Y = 5;
 
     private static int CELL_NUM = 24;
-    private static int CELL_WIDTH;
+
+    private static int INPUT_WIDTH = 0;
+
+    private static String SCREEN_ID = "";
+
 
     static {
         recalTargetWidth();
-        recalCellWidth();
     }
 
     public static void print() {
         logger.info("横幅 : " + getBaseWidth() + " (MAX_WIDTH=" + MAX_WIDTH + ", SIDE_MARGIN=" + SIDE_MARGIN + ")");
         logger.info("縦方向（Y軸）許容誤差： " + ALLOWABLE_LIMIT_Y + ",  横方向（X軸）許容誤差： " + ALLOWABLE_LIMIT_X);
-        logger.info("セル幅： " + CELL_WIDTH);
     }
 
     public static void configure(Properties props) {
@@ -43,24 +45,32 @@ public class Config {
         if(props.getProperty("ALLOWABLE_LIMIT_Y") != null && !props.getProperty("ALLOWABLE_LIMIT_Y").isEmpty()) {
             setAllowableLimitY(Integer.parseInt(props.getProperty("ALLOWABLE_LIMIT_Y")));
         }
-        if(props.getProperty("CELL_NUM") != null && !props.getProperty("CELL_NUM").isEmpty()) {
-            setCellNum(Integer.parseInt(props.getProperty("CELL_NUM")));
+    }
+
+    public static double getExpansionRatio() {
+        if(INPUT_WIDTH == 0) {
+            return 1.0;
+        }else {
+            double ratio = TARGET_WIDTH / INPUT_WIDTH;
+            if(ratio > 1.1) {
+                return ratio;
+            }else {
+                return 1.0;
+            }
         }
     }
 
-    /** 返還対象の画面の横幅 */
+    /** 変換先の画面の横幅 */
     public static int getBaseWidth() {
         return TARGET_WIDTH;
     }
     public static void setMaxWidth(int width) {
         MAX_WIDTH = width;
         recalTargetWidth();
-        recalCellWidth();
     }
     public static void setSideMargin(int margin) {
         SIDE_MARGIN = margin;
         recalTargetWidth();
-        recalCellWidth();
     }
     private static void recalTargetWidth() {
         TARGET_WIDTH = MAX_WIDTH - SIDE_MARGIN;
@@ -81,22 +91,23 @@ public class Config {
     public static void setAllowableLimitY(int y) {
         ALLOWABLE_LIMIT_Y = y;
     }
-
     /** 1行あたりのセル数（列数） */
     public static int getCellNum() {
         return CELL_NUM;
     }
-    public static void setCellNum(int cellNum) {
-        CELL_NUM = cellNum;
-        recalCellWidth();
+
+    public static int getInputWidth() {
+        return INPUT_WIDTH;
     }
 
-    /** セル１つあたりの横幅 */
-    public static int getCellWidth() {
-        return CELL_WIDTH;
-    }
-    private static void recalCellWidth() {
-        CELL_WIDTH = TARGET_WIDTH / CELL_NUM;
+    public static void setInputWidth(int width) {
+        INPUT_WIDTH = width;
     }
 
+    public static String getScreenId() {
+        return SCREEN_ID;
+    }
+    public static void setScreanId(String si) {
+        SCREEN_ID = si;
+    }
 }

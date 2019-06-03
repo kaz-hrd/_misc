@@ -2,6 +2,8 @@ package com.view.conv;
 
 import java.util.Set;
 
+import com.view.conv.util.TextBuilder;
+
 public class ViewComponent {
     protected int x = 0;
     protected int y= 0;
@@ -14,8 +16,8 @@ public class ViewComponent {
     public ViewComponent(ViewComponent parent) {
         this.parent = parent;
         if(this.parent != null) {
-            this.indentNum = this.parent.indentNum + 1;
-            this.width = this.parent.width + this.parent.margin;
+            this.indentNum = this.parent.getChildIndent();
+            this.width = this.parent.width - this.parent.margin;
         }
     }
     public ViewComponent(ViewComponent parent, String id, int x, int y, Set<String> states) {
@@ -29,11 +31,13 @@ public class ViewComponent {
         this(parent, id, x, y, states);
         this.width = width;
     }
-
+    protected int getChildIndent() {
+        return this.indentNum + 1;
+    }
     public void updateParent(ViewComponent parent) {
         this.parent = parent;
         if(this.parent != null) {
-            this.indentNum = this.parent.indentNum + 1;
+            this.indentNum = this.parent.getChildIndent();
         }
     }
     public int getX() {
@@ -70,11 +74,8 @@ public class ViewComponent {
         return indentNum;
     }
     public String getIndent() {
-        StringBuilder buf = new StringBuilder();
-        for(int i = 0; i < this.indentNum; i++) {
-            buf.append("    ");
-        }
-        return buf.toString();
+        String s = TextBuilder.getInstance().getIndentString(this.indentNum);
+        return s;
     }
     public String getHtmlText() {
         return "";
