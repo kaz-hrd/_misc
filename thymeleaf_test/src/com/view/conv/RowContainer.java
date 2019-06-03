@@ -75,11 +75,15 @@ public class RowContainer extends AbstractComponentContainer {
         if(prev != null && prev.width == 0) {
             ViewComponent c = prev;
             if(this.cells.size() == 1) {
-                c.width = this.width - 2;
+                c.width = this.width - c.x - 2;
                 logger.info("幅サイズの自動設定を実施 id=" + c.id + ", width=" + c.width);
             }else {
                 prev = this.cells.get(this.cells.size() - 2);
-                c.width = this.width - (prev.x + prev.width) - 2;
+                if(c.x - prev.x <= prev.width) {
+                    c.width = this.width - (prev.x + prev.width) - 2;
+                }else {
+                    c.width = this.width - c.x - 2;
+                }
                 logger.info("幅サイズの自動設定を実施 id=" + c.id + ", width=" + c.width);
             }
         }
